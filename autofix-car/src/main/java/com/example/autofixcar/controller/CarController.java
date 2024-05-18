@@ -3,7 +3,6 @@ package com.example.autofixcar.controller;
 import com.example.autofixcar.entity.Car;
 import com.example.autofixcar.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -97,6 +96,13 @@ public class CarController {
             return ResponseEntity.notFound().build();
         Pet petNew = studentService.savePet(studentId, pet);
         return ResponseEntity.ok(pet);
+
+
+    @GetMapping("/bystudent/{studentId}")
+    public ResponseEntity<List<Pet>> getByStudentId(@PathVariable("studentId") int studentId) {
+        List<Pet> pets = petService.byStudentId(studentId);
+        return ResponseEntity.ok(pets);
+    }
     }*/
 
 }
