@@ -1,4 +1,4 @@
-package com.example.autofixrepaircost.model;
+package com.example.autofixcar.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;

@@ -1,12 +1,14 @@
 package com.example.autofixcar.controller;
 
 import com.example.autofixcar.entity.Car;
+import com.example.autofixcar.model.Repair;
 import com.example.autofixcar.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("/car")
@@ -14,6 +16,8 @@ import java.util.List;
 public class CarController {
     @Autowired
     CarService carService;
+
+    private static final Pattern PATENT_PATTERN = Pattern.compile("^[A-Za-z]{4}[0-9]{2}$");
 
     //obtiene todos
     //al parecer se le borra ("/")
@@ -42,9 +46,12 @@ public class CarController {
         return ResponseEntity.ok(car);
     }
 
-//postear un auto
+    //postear un auto
     @PostMapping("/")
-    public ResponseEntity<Car> saveCar(@RequestBody Car car) {
+    public ResponseEntity<?> saveCar(@RequestBody Car car) {
+        if (!PATENT_PATTERN.matcher(car.getPatent()).matches()) {
+            return ResponseEntity.badRequest().body("Invalid patent format. It should be 4 letters followed by 2 numbers.");
+        }
         Car carNew = carService.saveCar(car);
         return ResponseEntity.ok(carNew);
     }
@@ -60,6 +67,16 @@ public class CarController {
     public ResponseEntity<Boolean> deleteCarById(@PathVariable Long id) throws Exception {
         var isDeleted = carService.deleteCar(id);
         return ResponseEntity.noContent().build();
+    }
+
+    //deberia obtener listas de reparaciones segun el id del auto
+    @GetMapping("/repairs/byCar/{carId}")
+    public ResponseEntity<List<Repair>> getRepairs(@PathVariable("carId") Long carId) {
+        Car car = carService.getCartById(carId);
+        if(car == null)
+            return ResponseEntity.notFound().build();
+        List<Repair> repairs = carService.getRepairs(carId);
+        return ResponseEntity.ok(repairs);
     }
 
 
