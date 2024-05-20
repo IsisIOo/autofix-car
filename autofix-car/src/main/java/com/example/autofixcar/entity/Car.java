@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
+//ESTE CORRESPONDE AL MICROSERVICIO 1
 @Entity
 @Data
 @NoArgsConstructor
