@@ -21,7 +21,7 @@ public class CarController {
 
     //obtiene todos
     //al parecer se le borra ("/")
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<Car>> getAll() {
         List<Car> cars = carService.getAll();
         if(cars.isEmpty())
