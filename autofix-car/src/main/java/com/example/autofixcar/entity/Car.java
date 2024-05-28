@@ -22,7 +22,7 @@ public class Car {
     @Column(unique = true, nullable = false)
     private Long id; //no lo asigno
 
-    private String patent; //patente de letras y numeros
+    private String patent; //patente de 4 letras y 2 numeros
 
     private String brand; //marca del vehiculo
 

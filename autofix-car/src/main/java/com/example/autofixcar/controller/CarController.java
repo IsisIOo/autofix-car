@@ -20,7 +20,6 @@ public class CarController {
     private static final Pattern PATENT_PATTERN = Pattern.compile("^[A-Za-z]{4}[0-9]{2}$");
 
     //obtiene todos
-    //al parecer se le borra ("/")
     @GetMapping("/")
     public ResponseEntity<List<Car>> getAll() {
         List<Car> cars = carService.getAll();
@@ -30,7 +29,7 @@ public class CarController {
     }
 
     //encontrar solo uno
-    @GetMapping("/{patent}")
+    @GetMapping("/carpatent/{patent}")
     public ResponseEntity<Car> getCarBypatent(@PathVariable String patent) {
         Car car = carService.getCarByPatent(patent);
         if(car == null)
@@ -38,7 +37,7 @@ public class CarController {
         return ResponseEntity.ok(car);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/carid/{id}")
     public ResponseEntity<Car> getById(@PathVariable("id") int id) {
         Car car = carService.getCartById(id);
         if(car == null)
