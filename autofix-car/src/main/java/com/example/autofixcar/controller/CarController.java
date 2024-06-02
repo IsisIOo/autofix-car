@@ -12,7 +12,6 @@ import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("/api/car")
-@CrossOrigin("*")
 public class CarController {
     @Autowired
     CarService carService;
