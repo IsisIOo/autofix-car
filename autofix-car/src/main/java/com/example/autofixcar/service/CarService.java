@@ -32,6 +32,11 @@ public class CarService {
         return carRepository.findByPatent(patent);
     }
 
+    //encontrar todos los autos que son de cierto tipo
+    public ArrayList<Car> getCarsbyType(String type){
+        return (ArrayList<Car>) carRepository.findByType(type);
+    }
+
     public Car getCartById(long id) {
         return carRepository.findById(id).orElse(null);
     }
@@ -49,9 +54,6 @@ public class CarService {
         }
     }
 
-    public List<Repair> getRepairs(Long carId) {
-        List<Repair> repairs = restTemplate.getForObject("http://localhost:8002/repair/byCar/" + carId, List.class);
-        return repairs;
-    }
+
 
 }

@@ -36,6 +36,14 @@ public class CarController {
         return ResponseEntity.ok(car);
     }
 
+    @GetMapping("/car-type/{patent}")
+    public ResponseEntity<List<Car>> getCarBytype(@PathVariable String type) {
+        List<Car> car = carService.getCarsbyType(type);
+        if(car == null)
+            return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(car);
+    }
+
     @GetMapping("/carid/{id}")
     public ResponseEntity<Car> getById(@PathVariable("id") int id) {
         Car car = carService.getCartById(id);
@@ -67,15 +75,7 @@ public class CarController {
         return ResponseEntity.noContent().build();
     }
 
-    //deberia obtener listas de reparaciones segun el id del auto
-    @GetMapping("/repairs/byCar/{carId}")
-    public ResponseEntity<List<Repair>> getRepairs(@PathVariable("carId") Long carId) {
-        Car car = carService.getCartById(carId);
-        if(car == null)
-            return ResponseEntity.notFound().build();
-        List<Repair> repairs = carService.getRepairs(carId);
-        return ResponseEntity.ok(repairs);
-    }
+
 
 
 /* ESTO ES LO NUEVO, CUANDO ESTEN CREADOS LOS OTROS PONERLO
