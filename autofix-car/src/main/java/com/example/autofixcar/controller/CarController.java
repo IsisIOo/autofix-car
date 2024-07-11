@@ -55,12 +55,27 @@ public class CarController {
     //postear un auto
     @PostMapping("/")
     public ResponseEntity<?> saveCar(@RequestBody Car car) {
+        // Validar el formato de la patente
         if (!PATENT_PATTERN.matcher(car.getPatent()).matches()) {
             return ResponseEntity.badRequest().body("Invalid patent format. It should be 4 letters followed by 2 numbers.");
         }
+
+        // Obtener todos los autos
+        List<Car> existingCars = carService.getAll();
+
+        // Verificar si la patente ya existe en la lista de autos existentes
+        for (Car existingCar : existingCars) {
+            if (existingCar.getPatent().equals(car.getPatent())) {
+                return ResponseEntity.badRequest().body("Car with this patent already exists.");
+            }
+        }
+
+        // Guardar el nuevo auto si la patente no existe
         Car carNew = carService.saveCar(car);
         return ResponseEntity.ok(carNew);
     }
+
+
 
     /* por ahora no lo quiero
     @PutMapping("/")
